@@ -102,7 +102,7 @@ search_text = st.sidebar.text_input("Hledat číslo letu")
 with st.spinner("Načítám data z letiště…"):
     flights = load_flights(dates_to_load)
 
-df = pd.DataFrame(flights, columns=["Datum", "Typ", "Let", "Letiště", "Čas", "Poznámka", "Aerolinka"])
+df = pd.DataFrame(flights, columns=["Datum", "Typ", "Čas", "Let", "Letiště", "Poznámka", "Aerolinka"])
 
 # ----------------------------------------------------
 # Filtry
