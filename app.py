@@ -51,7 +51,8 @@ def load_flights_for_date(date):
         icon = cols[3].find("img")["src"]
         typ = "PŘÍLET" if "arrival" in icon else "ODLET"
 
-        # 🔧 Čas přesunutý na 3. pozici
+        # POŘADÍ MUSÍ SEDĚT S NÁZVY SLOUPCŮ
+        # Datum, Typ, Čas, Let, Letiště, Poznámka, Aerolinka
         results.append((date, typ, time, flight_code, destination, note, company))
 
     return results
@@ -103,7 +104,7 @@ search_text = st.sidebar.text_input("Hledat číslo letu")
 with st.spinner("Načítám data z letiště…"):
     flights = load_flights(dates_to_load)
 
-# 🔧 Upravené pořadí sloupců
+# Tady MUSÍ odpovídat pořadí tuple z results.append
 df = pd.DataFrame(
     flights,
     columns=["Datum", "Typ", "Čas", "Let", "Letiště", "Poznámka", "Aerolinka"]
@@ -146,3 +147,4 @@ st.download_button(
     file_name="brno_flights_export.csv",
     mime="text/csv"
 )
+
