@@ -51,7 +51,8 @@ def load_flights_for_date(date):
         icon = cols[3].find("img")["src"]
         typ = "PŘÍLET" if "arrival" in icon else "ODLET"
 
-        results.append((date, typ, flight_code, destination, time, note, company))
+        # 🔧 Čas přesunutý na 3. pozici
+        results.append((date, typ, time, flight_code, destination, note, company))
 
     return results
 
@@ -102,7 +103,11 @@ search_text = st.sidebar.text_input("Hledat číslo letu")
 with st.spinner("Načítám data z letiště…"):
     flights = load_flights(dates_to_load)
 
-df = pd.DataFrame(flights, columns=["Datum", "Typ", "Čas", "Let", "Letiště", "Poznámka", "Aerolinka"])
+# 🔧 Upravené pořadí sloupců
+df = pd.DataFrame(
+    flights,
+    columns=["Datum", "Typ", "Čas", "Let", "Letiště", "Poznámka", "Aerolinka"]
+)
 
 # ----------------------------------------------------
 # Filtry
@@ -125,7 +130,6 @@ df = df.sort_values("Datetime").drop(columns=["Datetime"])
 st.title("✈️ BRQ – Přílety a odlety")
 st.write(f"**Nalezeno {len(df)} letů**")
 
-# ❗️ Odstranění prvního prázdného sloupce (index)
 df_display = df.reset_index(drop=True)
 
 st.dataframe(df_display, use_container_width=True, hide_index=True)
